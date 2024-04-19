@@ -38,7 +38,7 @@ const AdminCategoriesPage = () => {
     event.stopPropagation();
     swal({
       title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this subject!",
+      text: "Once deleted, you will not be able to recover this subject!!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
