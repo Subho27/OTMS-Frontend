@@ -6,38 +6,38 @@ import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
 
 const Sidebar = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
       path: "/adminProfile",
       name: "Profile",
-      icon: <FaUserAlt />,
+      // icon: <FaUserAlt />,
     },
     {
       path: "/adminCategories",
-      name: "Categories",
-      icon: <TbLayoutGrid />,
+      name: "Subjects",
+      // icon: <TbLayoutGrid />,
     },
     {
       path: "/adminAddCategory",
-      name: "Add Category",
-      icon: <TbLayoutGridAdd />,
+      name: "Add Subject",
+      // icon: <TbLayoutGridAdd />,
     },
     {
       path: "/adminQuizzes",
       name: "Quizzes",
-      icon: <MdQuiz />,
+      // icon: <MdQuiz />,
     },
     {
       path: "/adminAddQuiz",
       name: "Add Quiz",
-      icon: <MdQueue />,
+      // icon: <MdQueue />,
     },
     {
       path: "/adminallResult",
       name: "All Result",
-      icon: <TbReport/>,
+      // icon: <TbReport/>,
     },
   ];
   return (
@@ -45,14 +45,14 @@ const Sidebar = ({ children }) => {
       className="container"
       style={{ display: "flex", width: "auto", margin: "0px", padding: "0px" }}
     >
-      <div style={{ width: isOpen ? "12em" : "3em" }} className="sidebar">
+      <div style={{ width: isOpen ? "15em" : "3em" }} className="sidebar">
         <div className="top_section">
           <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">
-            Logo
+
           </h1>
-          <div style={{ marginLeft: isOpen ? "50px" : "0px" }} className="bars">
-            <FaBars onClick={toggle} />
-          </div>
+          {/*<div style={{ marginLeft: isOpen ? "50px" : "0px" }} className="bars">*/}
+          {/*  <img src={require("../images/right.png")} alt="Open" style={{ width: "50px", height:"50px" }}/>*/}
+          {/*</div>*/}
         </div>
         {menuItem.map((item, index) => (
           <NavLink

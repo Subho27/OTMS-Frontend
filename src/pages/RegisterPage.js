@@ -5,7 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import { Form, Button, InputGroup, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import {
+  FaEye,
+  FaEyeSlash,
+  FaKey,
+  FaMobile,
+  FaPhone, FaTruckLoading,
+  FaUser,
+  FaUserAltSlash,
+  FaUserAstronaut,
+  FaUserGraduate
+} from "react-icons/fa";
 import * as authConstants from "../constants/authConstants";
 import { Link } from "react-router-dom";
 
@@ -62,114 +72,135 @@ const RegisterPage = () => {
   };
 
   return (
-    <FormContainer>
-      <h1>Sign Up</h1>
-      <Form onSubmit={submitHandler}>
-        <Form.Group className="my-3" controlId="fname">
-          <Form.Label>First Name</Form.Label>
-          <Form.Control
-            type="name"
-            placeholder="Enter First Name"
-            value={firstName}
-            onChange={(e) => {
-              setFirstName(e.target.value);
-            }}
-          ></Form.Control>
-        </Form.Group>
+  <div className='custom-bg-signup'>
+    <div className='custom-form-container-signup'>
+      <FormContainer>
+        <h1 className='poppins-bold text-center'>Sign up</h1>
+        <Form onSubmit={submitHandler}>
+          <div className='custom-display'>
+            <Form.Group className="my-3 custom-input-field" controlId="fname">
+              <Form.Label>First Name</Form.Label>
+              <InputGroup className='input-field'>
+                <FaUserGraduate className='user-icon'/>
+                <Form.Control
+                    type="name"
+                    placeholder="Enter First Name"
+                    value={firstName}
+                    onChange={(e) => {
+                      setFirstName(e.target.value);
+                    }}
+                ></Form.Control>
+              </InputGroup>
+            </Form.Group>
+            <Form.Group className="my-3 custom-input-field" controlId="lname">
+              <Form.Label>Last Name</Form.Label>
+              <InputGroup className='input-field'>
+                <FaUserGraduate className='user-icon'/>
+                <Form.Control
+                    type="name"
+                    placeholder="Enter Last Name"
+                    value={lastName}
+                    onChange={(e) => {
+                      setLastName(e.target.value);
+                    }}
+                ></Form.Control>
+              </InputGroup>
+            </Form.Group>
+          </div>
 
-        <Form.Group className="my-3" controlId="lname">
-          <Form.Label>Last Name</Form.Label>
-          <Form.Control
-            type="name"
-            placeholder="Enter Last Name"
-            value={lastName}
-            onChange={(e) => {
-              setLastName(e.target.value);
-            }}
-          ></Form.Control>
-        </Form.Group>
+          <div className='custom-display'>
+            <Form.Group className="my-3 custom-input-field" controlId="username">
+              <Form.Label>User Name</Form.Label>
+              <InputGroup className='input-field'>
+                <FaUser className='user-icon'/>
+                <Form.Control
+                    type="text"
+                    placeholder="Enter User Name"
+                    value={username}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                    }}
+                ></Form.Control>
+              </InputGroup>
+            </Form.Group>
+            <Form.Group className="my-3 custom-input-field" controlId="phoneNumber">
+              <Form.Label>Phone Number</Form.Label>
+              <InputGroup className='input-field'>
+                <FaMobile className='user-icon'/>
+                <Form.Control
+                    type="tel"
+                    placeholder="Enter Phone Number"
+                    value={phoneNumber}
+                    onChange={(e) => {
+                      setPhoneNumber(e.target.value);
+                    }}
+                ></Form.Control>
+              </InputGroup>
+            </Form.Group>
+          </div>
 
-        <Form.Group className="my-3" controlId="username">
-          <Form.Label>User Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter User Name"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-          ></Form.Control>
-        </Form.Group>
+          <div className='custom-display'>
+            <Form.Group className="my-3 custom-input-field" controlId="password">
+              <Form.Label>Password</Form.Label>
+              <InputGroup className='input-field'>
+                <FaKey className='user-icon'/>
+                <Form.Control
+                    type={`${passwordType}`}
+                    placeholder="Enter Password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                ></Form.Control>
+                <Button className='border'
+                        onClick={showPasswordHandler}
+                        variant=""
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </Button>
+              </InputGroup>
+            </Form.Group>
+            <Form.Group className="my-3 custom-input-field" controlId="confirmPassword">
+              <Form.Label>Confirm Password</Form.Label>
+              <InputGroup className='input-field'>
+                <FaKey className='user-icon'/>
+                <Form.Control
+                    type={`${confirmPasswordType}`}
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChange={(e) => {
+                      setConfirmPassword(e.target.value);
+                    }}
+                ></Form.Control>
+                <Button
+                    className='border'
+                    onClick={showConfirmPasswordHandler}
+                    variant=""
+                >
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </Button>
+              </InputGroup>
+            </Form.Group>
+          </div>
 
-        <Form.Group className="my-3" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <InputGroup>
-            <Form.Control
-              type={`${passwordType}`}
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            ></Form.Control>
-            <Button
-              onClick={showPasswordHandler}
-              variant=""
-              style={{ border: "1px solid black" }}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </Button>
-          </InputGroup>
-        </Form.Group>
+          <Button variant="" className="w-100 custom-button" type="submit">
+            <div className="text-zoom">Register</div>
+          </Button>
+        </Form>
 
-        <Form.Group className="my-3" controlId="confirmPassword">
-          <Form.Label>Confirm Password</Form.Label>
-          <InputGroup>
-            <Form.Control
-              type={`${confirmPasswordType}`}
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-              }}
-            ></Form.Control>
-            <Button
-              onClick={showConfirmPasswordHandler}
-              variant=""
-              style={{ border: "1px solid black" }}
-            >
-              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-            </Button>
-          </InputGroup>
-        </Form.Group>
+        {registerReducer.loading ? (
+            <Loader />
+        ) : (
+            <Row className="py-3 text-center">
+              <Col>
+                Have an Account? <Link to="/" style={{color:"rgb(68 177 49)"}}>Login</Link>
+              </Col>
+            </Row>
+        )}
 
-        <Form.Group className="my-3" controlId="phoneNumber">
-          <Form.Label>Phone Number</Form.Label>
-          <Form.Control
-            type="tel"
-            placeholder="Enter Phone Number"
-            value={phoneNumber}
-            onChange={(e) => {
-              setPhoneNumber(e.target.value);
-            }}
-          ></Form.Control>
-        </Form.Group>
-        <Button variant="" className="my-3" type="submit" style={{backgroundColor:"rgb(68 177 49)", color:"white"}}>
-          Register
-        </Button>
-      </Form>
-
-      {registerReducer.loading ? (
-        <Loader />
-      ) : (
-        <Row className="py-3">
-          <Col>
-            Have an Account? <Link to="/" style={{color:"rgb(68 177 49)"}}>Login</Link>
-          </Col>
-        </Row>
-      )}
-
-    </FormContainer>
+      </FormContainer>
+    </div>
+  </div>
   );
 };
 

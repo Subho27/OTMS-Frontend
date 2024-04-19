@@ -158,7 +158,7 @@ const AdminUpdateQuiz = () => {
             />
 
             <div className="my-3">
-              <label htmlFor="category-select">Choose a Category:</label>
+              <label htmlFor="category-select">Choose a Subject:</label>
               <Form.Select
                 aria-label="Choose Category"
                 id="category-select"

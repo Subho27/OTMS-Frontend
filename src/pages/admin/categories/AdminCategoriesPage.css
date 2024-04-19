@@ -9,9 +9,9 @@
 }
 
 .adminCategoriesPage__content {
-    width: 70%;
+    margin: 10px;
+    width: 100%;
     height: fit-content;
-    margin: 5px;
     padding: 8px;
 }
 
@@ -24,9 +24,34 @@
 }
 
 .adminCategoriesPage__content--button {
+    float: right;
     display: block;
     width: 20%;
     margin: 20px auto;
-    background-color: rgb(68 177 49);
-    color: white;
+    background-color: #37B5B6;
+    color: #FFFFFF;
+    border: none;
+    font-size: 18px;
+    font-family: "Poppins", sans-serif;
+}
+
+.adminCategoriesPage__content--button:hover {
+    border: 2px solid #37B5B6;
+    color: #37B5B6;
+    font-weight: bold;
+}
+
+.action-button:hover {
+    font-weight: bold !important;
+}
+
+.profile-heading {
+    padding-left: 20px;
+    padding-bottom: 10px;
+    font-family: "Poppins", sans-serif;
+
+}
+
+.custom-shadow {
+    box-shadow: 0 0 5px 2px #b0afaf;
 }

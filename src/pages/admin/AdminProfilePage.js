@@ -33,14 +33,16 @@ const AdminProfilePage = () => {
         <Sidebar />
       </div>
       <div className="adminProfilePage__content">
-        <Image
-          className="adminProfilePage__content--profilePic"
-          width="20%"
-          height="20%"
-          roundedCircle
-          src="images/user.png"
-        />
-
+        {/*<Image*/}
+        {/*  className="adminProfilePage__content--profilePic"*/}
+        {/*  width="20%"*/}
+        {/*  height="20%"*/}
+        {/*  roundedCircle*/}
+        {/*  src="images/user.png"*/}
+        {/*/>*/}
+        <div className='text-start profile-heading'>
+          <h2>About {`${user.firstName}`}</h2>
+        </div>
         <Table bordered className="adminProfilePage__content--table">
           <tbody>
             <tr>
@@ -61,7 +63,10 @@ const AdminProfilePage = () => {
             </tr>
             <tr>
               <td>Status</td>
-              <td>{`${user.active}`}</td>
+              <td>{user.active ?
+                  <img src={require('../../images/status-ok.png')} alt='OK' className='status-icon'/> :
+                  <img src={require('../../images/status-not-ok.png')} alt='NOT OK' className='status-icon'/>
+              }</td>
             </tr>
           </tbody>
         </Table>

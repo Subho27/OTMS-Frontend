@@ -8,10 +8,10 @@
 }
 
 .adminProfilePage__content {
+    margin-top: 5%;
     text-align: center;
     width: 80%;
     height: fit-content;
-    margin: 0px auto;
 }
 
 .adminProfilePage__content--profilePic {
@@ -19,7 +19,42 @@
 }
 
 .adminProfilePage__content--table {
-    border: 1px solid gray;
-    width: 50%;
+    border: none !important;
+    width: 98%;
     margin: 20px auto;
+}
+
+.adminProfilePage__content--table tr td {
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.adminProfilePage__content--table td:first-child {
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: #492E87;
+    width: 30%;
+    text-align: left;
+}
+
+.adminProfilePage__content--table td:last-child {
+    font-family: "Poppins", sans-serif;
+    color: #492E87;
+    width: 70%;
+    text-align: left;
+    letter-spacing: 1px;
+}
+
+.profile-heading {
+    padding-left: 20px;
+    padding-bottom: 10px;
+    font-family: "Poppins", sans-serif;
+
+}
+
+.status-icon {
+    height: 20px;
+    width: 20px;
 }

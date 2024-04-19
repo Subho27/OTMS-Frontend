@@ -1,0 +1,10 @@
+.navbar-brand {
+    padding-left: 380px;
+    font-size: 30px;
+}
+
+.nav-link.active {
+    background: #37B5B6;
+    font-family: "Poppins", sans-serif;
+    color: #F2F597 !important;
+}

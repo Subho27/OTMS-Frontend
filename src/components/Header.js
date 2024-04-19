@@ -3,6 +3,7 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
+import './Header.css'
 
 const Header = () => {
   const navigate = useNavigate();
@@ -29,17 +30,25 @@ const Header = () => {
     }
   }, [navigate]);
 
+  useEffect(() => {
+    console.log("hello");
+    if(document.getElementById('logout-button') !== null &&
+        document.getElementById('logout-button').className.includes("active")) {
+      console.log(document.getElementById('logout-button'));
+      document.getElementById('logout-button').className.replace("active", "");
+    }
+  }, []);
+
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
+      <Navbar style={{ backgroundColor: "#492E87" }} variant="dark" expand="lg" collapseOnSelect>
         <Container>
-            <Navbar.Brand>Online Test Management Portal</Navbar.Brand>
-
+            <Navbar.Brand className='poppins-extrabold text-center'>ONLINE TEST MANAGEMENT PORTAL</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="justify-content-end flex-grow-1 pe-3">
               {isLoggedIn ? (
-                  <Nav.Link>{loginReducer.user.firstName}</Nav.Link>
+                  <Nav.Link className='active'>{loginReducer.user.firstName}</Nav.Link>
               ) : (
                 <LinkContainer to="/">
                   <Nav.Link>Login</Nav.Link>
@@ -47,9 +56,9 @@ const Header = () => {
               )}
 
               {isLoggedIn ? (
-                <LinkContainer to="/">
-                  <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
-                </LinkContainer>
+                  <LinkContainer to="/">
+                    <Nav.Link id='logout-button' onClick={logoutHandler}>Logout</Nav.Link>
+                  </LinkContainer>
               ) : (
                 <LinkContainer to="/register">
                   <Nav.Link>Register</Nav.Link>

@@ -3,9 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col, InputGroup } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import {FaEye, FaEyeSlash, FaKey, FaTruckLoading, FaUser, FaUserSecret} from "react-icons/fa";
 import { login } from "../actions/authActions";
 import Loader from "../components/Loader";
+import '../components/FormContainer.css'
 import * as authConstants from "../constants/authConstants";
 
 const LoginPage = () => {
@@ -54,65 +55,69 @@ const LoginPage = () => {
     }
   }, []);
   return (
-    <FormContainer>
-      <h1>Sign In</h1>
-      <Form onSubmit={submitHandler}>
-        <Form.Group className="my-3" controlId="username">
-          <Form.Label>User Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter User Name"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-          ></Form.Control>
-        </Form.Group>
+    <div className='custom-bg'>
+      <div className='custom-form-container-login'>
+        <FormContainer>
+          <h1 className='poppins-bold text-center'>Sign in</h1>
+          <Form onSubmit={submitHandler}>
+            <Form.Group className="my-3" controlId="username">
+              <Form.Label className='poppins-light'>Username</Form.Label>
+              <InputGroup className='input-field'>
+                <FaUser className='user-icon'/>
+                <Form.Control
+                    type="text"
+                    placeholder="Enter Username"
+                    value={username}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                    }}
+                ></Form.Control>
+              </InputGroup>
+            </Form.Group>
 
-        <Form.Group className="my-3" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <InputGroup>
-            <Form.Control
-              type={`${passwordType}`}
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
+            <Form.Group className="my-3" controlId="password">
+              <Form.Label className='poppins-light'>Password</Form.Label>
+              <InputGroup className='input-field'>
+                <FaKey className='user-icon'/>
+                <Form.Control
+                    type={`${passwordType}`}
+                    placeholder="Enter Password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                />
+                <Button
+                    onClick={showPasswordHandler}
+                    variant="">
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </Button>
+              </InputGroup>
+            </Form.Group>
             <Button
-              onClick={showPasswordHandler}
-              variant=""
-              style={{ border: "1px solid black" }}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
+                variant=""
+                className="w-100 custom-button"
+                type="submit"
+            ><div className="text-zoom">Login</div>
             </Button>
-          </InputGroup>
-        </Form.Group>
+          </Form>
 
-        <Button
-          variant=""
-          className="my-3"
-          type="submit"
-          style={{ backgroundColor: "rgb(68 177 49)", color: "white" }}
-        >
-          Login
-        </Button>
-      </Form>
-
-      {loginReducer.loading ? (
-        <Loader />
-      ) : (
-        <Row className="py-3">
-          <Col>
-            New Customer?{" "}
-            <Link to="/register" style={{ color: "rgb(68 177 49)" }}>
-              Register
-            </Link>
-          </Col>
-        </Row>
-      )}
-    </FormContainer>
+          {loginReducer.loading ? (
+              <Loader />
+              // <FaTruckLoading/>
+          ) : (
+              <Row className="py-3 text-center">
+                <Col>
+                  New Student?{" "}
+                  <Link to="/register" style={{ color: "rgb(68 177 49)" }}>
+                    Register
+                  </Link>
+                </Col>
+              </Row>
+          )}
+        </FormContainer>
+      </div>
+    </div>
   );
 };
 

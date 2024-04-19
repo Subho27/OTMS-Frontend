@@ -46,7 +46,7 @@ const UserQuizResultPage = () => {
               <tr>
                 <th>Quiz Id</th>
                 <th>Quiz Name</th>
-                <th>Category Name</th>
+                <th>Subject Name</th>
                 <th>Obtained Marks</th>
                 <th>Total Marks</th>
                 <th>Date</th>

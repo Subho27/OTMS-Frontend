@@ -1,17 +1,22 @@
-import { Spinner } from "react-bootstrap";
+import {Button, Spinner} from "react-bootstrap";
 
 const Loader = () => {
   return (
-    <Spinner
-      animation="border"
-      role="status"
-      style={{
-        widht: "100px",
-        height: "100px",
-        margin: "auto",
-        display: "block",
-      }}
-    ></Spinner>
+      <Button variant="primary" disabled
+            style={{
+              width: "50px",
+              height: "50px",
+              margin: "10px auto",
+              display: "block",
+            }}>
+          <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+          />
+      </Button>
   );
 };
 

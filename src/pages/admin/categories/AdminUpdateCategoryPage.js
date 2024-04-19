@@ -30,9 +30,9 @@ const AdminUpdateCategoryPage = () => {
     const category = { catId: catId, title: title, description: description };
     updateCategory(dispatch, category, token).then((data) => {
       if (data.type === categoriesConstants.UPDATE_CATEGORY_SUCCESS) {
-        swal("Category Updated!", `${title} succesfully updated`, "success");
+        swal("Subject Updated!", `${title} succesfully updated`, "success");
       } else {
-        swal("Category Not Updated!", `${title} not updated`, "error");
+        swal("Subject Not Updated!", `${title} not updated`, "error");
       }
     });
     navigate("/adminCategories");
@@ -45,7 +45,7 @@ const AdminUpdateCategoryPage = () => {
       </div>
       <div className="adminUpdateCategoryPage__content">
         <FormContainer>
-          <h2>Update Category</h2>
+          <h2>Update Subject</h2>
           <Form onSubmit={submitHandler}>
             <Form.Group className="my-3" controlId="title">
               <Form.Label>Title</Form.Label>
