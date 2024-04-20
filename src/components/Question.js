@@ -6,9 +6,11 @@ import { useDispatch } from "react-redux";
 import { deleteQuestion } from "../actions/questionsActions";
 import swal from "sweetalert";
 import * as questionsConstants from "../constants/questionsConstants";
+import {confirmation, notify} from "./Notify";
 
 const Question = ({ number, answers, question, isAdmin = false }) => {
   const dispatch = useDispatch();
+  const toastId = React.useRef(null);
   const navigate = useNavigate();
   const answer = question.answer;
   const token = JSON.parse(localStorage.getItem("jwtToken"));
@@ -29,33 +31,32 @@ const Question = ({ number, answers, question, isAdmin = false }) => {
   };
 
   const deleteQuestionHandler = (ques) => {
-    swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this question!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
+    confirmation(
+      "Are you sure?",
+      "Once deleted, you will not be able to recover this question!",
+      "warning",
+      () => {
         deleteQuestion(dispatch, ques.quesId, token).then((data) => {
           if (data.type === questionsConstants.DELETE_QUESTION_SUCCESS) {
-            swal(
-              "Question Deleted!",
-              `Question with id ${ques.quesId}, succesfully deleted`,
-              "success"
+            notify(
+                "Question Deleted!",
+                `Question with id ${ques.quesId}, succesfully deleted`,
+                "success"
             );
           } else {
-            swal(
-              "Question Not Deleted!",
-              `Question with id ${ques.quesId} not deleted`,
-              "error"
+            notify(
+                "Question Not Deleted!",
+                `Question with id ${ques.quesId} not deleted`,
+                "error"
             );
           }
         });
-      } else {
-        swal(`Question with id ${ques.quesId} is safe`);
-      }
-    });
+      },
+      () => {
+        notify("Pheww!!!",`Question is safe`, "success")
+      },
+      toastId.current
+    )
   };
 
   return (
@@ -72,21 +73,23 @@ const Question = ({ number, answers, question, isAdmin = false }) => {
         >
           <div className="question__options--2">
             <div className="question__options--optionDiv">
-              <InputGroup.Radio
+              {!isAdmin && <InputGroup.Radio
                 value={"option1"}
                 name={number}
                 aria-label="option 1"
-              />
+              />}
+              {isAdmin && "Option 1. "}
               <span className="question__options--optionText">
                 {question.option1}
               </span>
             </div>
             <div className="question__options--optionDiv">
-              <InputGroup.Radio
+              {!isAdmin && <InputGroup.Radio
                 value={"option2"}
                 name={number}
                 aria-label="option 2"
-              />
+              />}
+              {isAdmin && "Option 2. "}
               <span className="question__options--optionText">
                 {question.option2}
               </span>
@@ -95,21 +98,23 @@ const Question = ({ number, answers, question, isAdmin = false }) => {
 
           <div className="question__options--2">
             <div className="question__options--optionDiv">
-              <InputGroup.Radio
+              {!isAdmin && <InputGroup.Radio
                 value={"option3"}
                 name={number}
                 aria-label="option 3"
-              />
+              />}
+              {isAdmin && "Option 3. "}
               <span className="question__options--optionText">
                 {question.option3}
               </span>
             </div>
             <div className="question__options--optionDiv">
-              <InputGroup.Radio
+              {!isAdmin && <InputGroup.Radio
                 value={"option4"}
                 name={number}
                 aria-label="option 4"
-              />
+              />}
+              {isAdmin && "Option 4. "}
               <span className="question__options--optionText">
                 {question.option4}
               </span>
@@ -133,6 +138,7 @@ const Question = ({ number, answers, question, isAdmin = false }) => {
                 fontWeight: "500",
                 cursor: "pointer",
               }}
+              className='action-button'
             >{`Update`}</div>
 
             <div
@@ -144,6 +150,7 @@ const Question = ({ number, answers, question, isAdmin = false }) => {
                 fontWeight: "500",
                 cursor: "pointer",
               }}
+              className='action-button'
             >{`Delete`}</div>
           </div>
         </div>

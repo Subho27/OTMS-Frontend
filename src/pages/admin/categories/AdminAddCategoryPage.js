@@ -9,8 +9,8 @@ import {
   addCategory,
   fetchCategories,
 } from "../../../actions/categoriesActions";
-import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
+import {notify} from "../../../components/Notify";
 
 const AdminAddCategoryPage = () => {
   const [title, setTitle] = useState("");
@@ -23,13 +23,13 @@ const AdminAddCategoryPage = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     const category = { title: title, description: description };
-    addCategory(dispatch, category, token).then((data) => {
+    addCategory(dispatch, category, token).then( async (data) => {
       if (data.type === categoriesConstants.ADD_CATEGORY_SUCCESS) {
-        swal("Subject Added!", `${title} succesfully added`, "success");
+        notify("Subject Added!", `${title} succesfully added`, "success");
       } else {
-        swal("Subject Not Added!", `${title} not added`, "error");
+        notify("Subject Not Added!", `${title} not added`, "error");
       }
-      // navigate("/adminCategories");
+      navigate("/adminCategories");
     });
   };
 
@@ -40,10 +40,10 @@ const AdminAddCategoryPage = () => {
       </div>
       <div className="adminAddCategoryPage__content">
         <FormContainer>
-          <h2>Add Subject</h2>
-          <Form onSubmit={submitHandler}>
+          <h2 className='profile-heading text-center'>Add Subject</h2>
+          <Form onSubmit={submitHandler} className='custom-form'>
             <Form.Group className="my-3" controlId="title">
-              <Form.Label>Title</Form.Label>
+              <Form.Label className='poppins-light'>Title</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter Subject Title"
@@ -55,9 +55,9 @@ const AdminAddCategoryPage = () => {
             </Form.Group>
 
             <Form.Group className="my-3" controlId="description">
-              <Form.Label>Description</Form.Label>
+              <Form.Label className='poppins-light'>Description</Form.Label>
               <Form.Control
-                style={{ textAlign: "top" }}
+                style={{ textAlign: "left" }}
                 as="textarea"
                 rows="5"
                 type="text"

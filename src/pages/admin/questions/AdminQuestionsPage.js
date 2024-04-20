@@ -44,6 +44,7 @@ const AdminQuestionsPage = () => {
         <Button
           className="adminQuestionsPage__content--button"
           onClick={addNewQuestionHandler}
+          variant=""
         >
           Add Question
         </Button>

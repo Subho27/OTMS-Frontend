@@ -30,15 +30,6 @@ const Header = () => {
     }
   }, [navigate]);
 
-  useEffect(() => {
-    console.log("hello");
-    if(document.getElementById('logout-button') !== null &&
-        document.getElementById('logout-button').className.includes("active")) {
-      console.log(document.getElementById('logout-button'));
-      document.getElementById('logout-button').className.replace("active", "");
-    }
-  }, []);
-
   return (
     <header>
       <Navbar style={{ backgroundColor: "#492E87" }} variant="dark" expand="lg" collapseOnSelect>
@@ -48,7 +39,7 @@ const Header = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="justify-content-end flex-grow-1 pe-3">
               {isLoggedIn ? (
-                  <Nav.Link className='active'>{loginReducer.user.firstName}</Nav.Link>
+                  <Nav.Link className='profile-name'>{loginReducer.user.firstName}</Nav.Link>
               ) : (
                 <LinkContainer to="/">
                   <Nav.Link>Login</Nav.Link>
@@ -58,6 +49,7 @@ const Header = () => {
               {isLoggedIn ? (
                   <LinkContainer to="/">
                     <Nav.Link id='logout-button' onClick={logoutHandler}>Logout</Nav.Link>
+                    {/*<span className='poppins-bold logout-button' onClick={logoutHandler}>LOG OUT</span>*/}
                   </LinkContainer>
               ) : (
                 <LinkContainer to="/register">

@@ -4,6 +4,10 @@
 }
 
 .nav-link.active {
+    background: none !important;
+}
+
+.profile-name {
     background: #37B5B6;
     font-family: "Poppins", sans-serif;
     color: #F2F597 !important;

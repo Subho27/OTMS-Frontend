@@ -41,7 +41,7 @@ const AdminProfilePage = () => {
         {/*  src="images/user.png"*/}
         {/*/>*/}
         <div className='text-start profile-heading'>
-          <h2>About {`${user.firstName}`}</h2>
+          <h2 className='text-center'>About <strong>{`${user.firstName}`}</strong></h2>
         </div>
         <Table bordered className="adminProfilePage__content--table">
           <tbody>

@@ -19,40 +19,45 @@ import UserQuizManualPage from "./pages/users/UserQuizManualPage";
 import UserQuestionsPage from "./pages/users/UserQuestionsPage";
 import UserQuizResultPage from "./pages/users/UserQuizResultPage";
 import AdminQuizResultPage from "./pages/admin/AdminQuizResultPage";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer} from "react-toastify";
 
 const App = () => {
   return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/adminProfile" element={<AdminProfilePage />} />
-        <Route path="/adminCategories" element={<AdminCategoriesPage />} />
-        <Route path="/adminAddCategory" element={<AdminAddCategoryPage />} />
-        <Route
-          path="/adminUpdateCategory/:catId"
-          element={<AdminUpdateCategoryPage />}
-        />
-        <Route path="/adminQuizzes" element={<AdminQuizzesPage />} />
-        <Route path="/adminAddQuiz" element={<AdminAddQuiz />} />
-        <Route path="/adminUpdateQuiz/:quizId" element={<AdminUpdateQuiz />} />
-        <Route path="/adminQuestions" element={<AdminQuestionsPage />} />
-        <Route path="/adminAddQuestion" element={<AdminAddQuestionsPage />} />
-        <Route path="/adminallResult" element={<AdminQuizResultPage />} />
-        <Route
-          path="/adminUpdateQuestion/:quesId"
-          element={<AdminUpdateQuestionPage />}
-        />
-        <Route path="/profile" element={<UserProfilePage />} />
-        <Route path="/quizzes" element={<UserQuizzesPage />} />
-        <Route path="/quiz/*" element={<UserQuizzesPage />} />
-        <Route path="/quizManual/" element={<UserQuizManualPage />} />
-        <Route path="/questions/" element={<UserQuestionsPage />} />
-        <Route path="/quizResults/" element={<UserQuizResultPage />} />
-      </Routes>
-    </Router>
+      <div>
+        <ToastContainer />
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/adminProfile" element={<AdminProfilePage />} />
+            <Route path="/adminCategories" element={<AdminCategoriesPage />} />
+            <Route path="/adminAddCategory" element={<AdminAddCategoryPage />} />
+            <Route
+                path="/adminUpdateCategory/:catId"
+                element={<AdminUpdateCategoryPage />}
+            />
+            <Route path="/adminQuizzes" element={<AdminQuizzesPage />} />
+            <Route path="/adminAddQuiz" element={<AdminAddQuiz />} />
+            <Route path="/adminUpdateQuiz/:quizId" element={<AdminUpdateQuiz />} />
+            <Route path="/adminQuestions" element={<AdminQuestionsPage />} />
+            <Route path="/adminAddQuestion" element={<AdminAddQuestionsPage />} />
+            <Route path="/adminallResult" element={<AdminQuizResultPage />} />
+            <Route
+                path="/adminUpdateQuestion/:quesId"
+                element={<AdminUpdateQuestionPage />}
+            />
+            <Route path="/profile" element={<UserProfilePage />} />
+            <Route path="/quizzes" element={<UserQuizzesPage />} />
+            <Route path="/quiz/*" element={<UserQuizzesPage />} />
+            <Route path="/quizManual/" element={<UserQuizManualPage />} />
+            <Route path="/questions/" element={<UserQuestionsPage />} />
+            <Route path="/quizResults/" element={<UserQuizResultPage />} />
+          </Routes>
+        </Router>
+      </div>
   );
 };
 

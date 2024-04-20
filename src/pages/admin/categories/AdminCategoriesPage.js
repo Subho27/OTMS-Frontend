@@ -11,9 +11,10 @@ import {
   deleteCategory,
   fetchCategories,
 } from "../../../actions/categoriesActions";
-import swal from "sweetalert";
+import {confirmation, notify} from "../../../components/Notify";
 
 const AdminCategoriesPage = () => {
+  const toastId = React.useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = JSON.parse(localStorage.getItem("jwtToken"));
@@ -36,33 +37,24 @@ const AdminCategoriesPage = () => {
 
   const deleteCategoryHandler = (event, category) => {
     event.stopPropagation();
-    swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this subject!!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        deleteCategory(dispatch, category.catId, token).then((data) => {
-          if (data.type === categoriesConstants.DELETE_CATEGORY_SUCCESS) {
-            swal(
-              "Subject Deleted!",
-              `${category.title} succesfully deleted`,
-              "success"
-            );
-          } else {
-            swal(
-              "Subject Not Deleted!",
-              `${category.title} not deleted`,
-              "error"
-            );
-          }
-        });
-      } else {
-        swal(`${category.title} is safe`);
-      }
-    });
+    confirmation(
+        "Are you sure?",
+        "Once deleted, you will not be able to recover this subject!!",
+        "warning",
+        () => {
+          deleteCategory(dispatch, category.catId, token).then((data) => {
+            if (data.type === categoriesConstants.DELETE_CATEGORY_SUCCESS) {
+              notify("Subject Deleted!", `${category.title} succesfully deleted`, "success");
+            } else {
+              notify("Subject Not Deleted!", `${category.title} not deleted`, "error");
+            }
+          });
+        },
+        () => {
+          notify("Pheww!!!",`${category.title} is safe`, "success")
+        },
+        toastId.current
+    )
   };
 
   useEffect(() => {
@@ -83,75 +75,78 @@ const AdminCategoriesPage = () => {
         <Sidebar />
       </div>
       <div className="adminCategoriesPage__content">
-        <h2 className='profile-heading'>Subjects</h2>
-        {categories ? (
-          categories.length === 0 ? (
-            <Message>
-              No categories are present. Try adding some categories.
-            </Message>
-          ) : (
-            categories.map((cat, index) => {
-              return (
-                <ListGroup
-                  className="adminCategoriesPage__content--categoriesList"
-                  key={index}
-                >
-                  <ListGroup.Item
-                    style={{ borderWidth: "0px" }}
-                    className="d-flex custom-shadow"
-                    onClick={() => categoryClickHandler(cat.catId)}
-                  >
-                    <div className="ms-2 me-auto">
-                      <div className="fw-bold">{cat.title}</div>
-                      {cat.description}
-                    </div>
+        <h2 className='profile-heading text-center'>Subjects</h2>
+        <div className="whole-list">
+          {categories ? (
+            categories.length === 0 ? (
+                <Message>
+                  No categories are present. Try adding some categories.
+                </Message>
+            ) : (
+                categories.map((cat, index) => {
+                  return (
+                      <ListGroup
+                          className="adminCategoriesPage__content--categoriesList"
+                          key={index}
+                      >
+                        <ListGroup.Item
+                            style={{ borderWidth: "0px"}}
+                            className="custom-shadow"
+                            onClick={() => categoryClickHandler(cat.catId)}
+                        >
+                          <div className="ms-2 me-auto">
+                            <div className="fw-bold">{cat.title}</div>
+                            <div className='subject-describe'>{cat.description}</div>
+                          </div>
 
-                    <div
-                      style={{
-                        display: "flex",
-                        height: "90%",
-                        margin: "auto 2px",
-                      }}
-                    >
-                      <div
-                        onClick={(event) => updateCategoryHandler(event, cat)}
-                        style={{
-                          margin: "2px 8px",
-                          textAlign: "center",
-                          color: "rgb(68 177 49)",
-                          fontWeight: "500",
-                          cursor:"pointer"
-                        }}
-                        className='action-button'
-                      >Update</div>
+                          <div
+                              style={{
+                                display: "flex",
+                                height: "90%",
+                                margin: "auto 2px",
+                              }}
+                          >
+                            <div
+                                onClick={(event) => updateCategoryHandler(event, cat)}
+                                style={{
+                                  margin: "2px 8px",
+                                  textAlign: "center",
+                                  color: "rgb(68 177 49)",
+                                  fontWeight: "500",
+                                  cursor:"pointer"
+                                }}
+                                className='action-button'
+                            >Update</div>
 
-                      <div
-                        onClick={(event) => deleteCategoryHandler(event, cat)}
-                        style={{
-                          margin: "2px 8px",
-                          textAlign: "center",
-                          color: "red",
-                          fontWeight: "500",
-                          cursor:"pointer"
-                        }}
-                        className='action-button'
-                      >Delete</div>
-                    </div>
-                  </ListGroup.Item>
-                </ListGroup>
-              );
-            })
-          )
+                            <div
+                                onClick={(event) => deleteCategoryHandler(event, cat)}
+                                style={{
+                                  margin: "2px 8px",
+                                  textAlign: "center",
+                                  color: "red",
+                                  fontWeight: "500",
+                                  cursor:"pointer"
+                                }}
+                                className='action-button'
+                            >Delete</div>
+                          </div>
+                        </ListGroup.Item>
+                      </ListGroup>
+                  );
+                })
+            )
         ) : (
-          <Loader />
+            <Loader />
         )}
-        {/*<Button*/}
-        {/*  variant=""*/}
-        {/*  className="adminCategoriesPage__content--button"*/}
-        {/*  onClick={addNewCategoryHandler}*/}
-        {/*>*/}
-        {/*  Add Subject*/}
-        {/*</Button>*/}
+        </div>
+
+        <Button
+          variant=""
+          className="adminCategoriesPage__content--button"
+          onClick={addNewCategoryHandler}
+        >
+          Add Subject
+        </Button>
       </div>
     </div>
   );

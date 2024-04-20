@@ -8,9 +8,10 @@ import Sidebar from "../../../components/Sidebar";
 import Loader from "../../../components/Loader";
 import { deleteQuiz, fetchQuizzes } from "../../../actions/quizzesActions";
 import * as quizzesConstants from "../../../constants/quizzesConstants";
-import swal from "sweetalert";
+import {confirmation, notify} from "../../../components/Notify";
 
 const AdminQuizzesPage = () => {
+  const toastId = React.useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const urlParams = new URLSearchParams(window.location.search);
@@ -24,29 +25,24 @@ const AdminQuizzesPage = () => {
     navigate("/adminAddQuiz");
   };
   const deleteQuizHandler = (quiz) => {
-    swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this quiz!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
+    confirmation(
+      "Are you sure?",
+      "Once deleted, you will not be able to recover this quiz!",
+      "warning",
+      () => {
         deleteQuiz(dispatch, quiz.quizId, token).then((data) => {
           if (data.type === quizzesConstants.DELETE_QUIZ_SUCCESS) {
-            swal(
-              "Quiz Deleted!",
-              `${quiz.title} succesfully deleted`,
-              "success"
-            );
+            notify("Quiz Deleted!", `${quiz.title} succesfully deleted`, "success");
           } else {
-            swal("Quiz Not Deleted!", `${quiz.title} not deleted`, "error");
+            notify("Quiz Not Deleted!", `${quiz.title} not deleted`, "error");
           }
         });
-      } else {
-        swal(`${quiz.title} is safe`);
-      }
-    });
+      },
+      () => {
+        notify("Pheww!!!",`${quiz.title} is safe`, "success")
+      },
+      toastId.current
+    )
   };
   const updateQuizHandler = (quizTitle, quizId) => {
     navigate(`/adminUpdateQuiz/${quizId}`);
@@ -74,7 +70,8 @@ const AdminQuizzesPage = () => {
         <Sidebar />
       </div>
       <div className="adminQuizzesPage__content">
-        <h2>Quizzes</h2>
+        <h2 className='profile-heading text-center'>Quizzes</h2>
+        <div className="whole-list">
         {quizzes ? (
           quizzes.length === 0 ? (
             <Message>No quizzes are present. Try adding some quizzes.</Message>
@@ -86,28 +83,17 @@ const AdminQuizzesPage = () => {
                     className="adminQuizzesPage__content--quizzesList"
                     key={index}
                   >
-                    <ListGroup.Item className="align-items-start" action>
+                    <ListGroup.Item className="align-items-start custom-shadow" action style={{ borderWidth: "0px" }}>
                       <div className="ms-2 me-auto">
-                        <div className="fw-bold">{quiz.title}</div>
-                        <p style={{ color: "grey" }}>{quiz.category.title}</p>
-                        {<p className="my-3">{quiz.description}</p>}
+                        <div className="fw-bold poppins-light">{quiz.title === "" ? "No name Found" : quiz.title}</div>
+                        <p style={{ color: "grey" }} className='poppins-light'>{quiz.category.title}</p>
+                        {<p className="my-3 poppins-light">{quiz.description === "" ? "No Description Found" : quiz.description}</p>}
                         <div className="adminQuizzesPage__content--ButtonsList">
-                          <div
+                          <Button variant="" className='button-list-button'
                             onClick={() =>
                               questionsHandler(quiz.title, quiz.quizId)
                             }
-                            style={{
-                              border: "1px solid grey",
-                              width: "100px",
-                              height: "35px",
-                              padding: "1px",
-                              textAlign: "center",
-                              borderRadius: "5px",
-                              color: "white",
-                              backgroundColor: "rgb(68 177 49)",
-                              margin: "0px 4px",
-                            }}
-                          >{`Questions`}</div>
+                          >{`Questions`}</Button>
                           <div
                             style={{
                               border: "1px solid grey",
@@ -130,36 +116,16 @@ const AdminQuizzesPage = () => {
                               margin: "0px 4px",
                             }}
                           >{`${quiz.numOfQuestions} Questions`}</div>
-                          <div
+                        </div>
+                        <div className="adminQuizzesPage__content--ButtonsList">
+                          <Button variant="" className='button-list-button'
                             onClick={() =>
                               updateQuizHandler(quiz.title, quiz.quizId)
                             }
-                            style={{
-                              border: "1px solid grey",
-                              color: "white",
-                              backgroundColor: "rgb(68 177 49)",
-                              width: "100px",
-                              padding: "1px",
-                              textAlign: "center",
-                              borderRadius: "5px",
-                              height: "35px",
-                              margin: "0px 4px",
-                            }}
-                          >{`Update`}</div>
-                          <div
+                          >{`Update`}</Button>
+                          <Button variant="" className='button-list-button'
                             onClick={() => deleteQuizHandler(quiz)}
-                            style={{
-                              border: "1px solid grey",
-                              color: "white",
-                              backgroundColor: "#ff0b0bdb",
-                              width: "100px",
-                              padding: "2px",
-                              textAlign: "center",
-                              borderRadius: "5px",
-                              height: "35px",
-                              margin: "0px 4px",
-                            }}
-                          >{`Delete`}</div>
+                          >{`Delete`}</Button>
                         </div>
                       </div>
                       {/* <Badge bg="primary" pill></Badge> */}
@@ -171,6 +137,7 @@ const AdminQuizzesPage = () => {
         ) : (
           <Loader />
         )}
+        </div>
         <Button
           variant=""
           className="adminQuizzesPage__content--button"

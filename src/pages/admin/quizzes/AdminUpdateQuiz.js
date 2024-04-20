@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import "./AdminUpdateQuiz.css";
-import swal from "sweetalert";
 import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "../../../components/Sidebar";
 import FormContainer from "../../../components/FormContainer";
@@ -10,6 +9,7 @@ import * as quizzesConstants from "../../../constants/quizzesConstants";
 import { fetchCategories } from "../../../actions/categoriesActions";
 import "./AdminUpdateQuiz.css";
 import { fetchQuizzes, updateQuiz } from "../../../actions/quizzesActions";
+import {notify} from "../../../components/Notify";
 
 const AdminUpdateQuiz = () => {
   const navigate = useNavigate();
@@ -21,14 +21,15 @@ const AdminUpdateQuiz = () => {
     state.quizzesReducer.quizzes.filter((quiz) => quiz.quizId == quizId)
   )[0];
 
+  console.log(oldQuiz);
   const [title, setTitle] = useState(oldQuiz.title);
   const [description, setDescription] = useState(oldQuiz.description);
   const [maxMarks, setMaxMarks] = useState(oldQuiz.maxMarks);
   const [numberOfQuestions, setNumberOfQuestions] = useState(
-    oldQuiz.numberOfQuestions
+    oldQuiz.numOfQuestions
   );
   const [isActive, setIsActive] = useState(oldQuiz.isActive);
-  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(oldQuiz.category.catId);
 
   const categoriesReducer = useSelector((state) => state.categoriesReducer);
   const [categories, setCategories] = useState(categoriesReducer.categories);
@@ -51,6 +52,7 @@ const AdminUpdateQuiz = () => {
         title: title,
         description: description,
         isActive: isActive,
+        numOfQuestions: numberOfQuestions,
         category: {
           catId: selectedCategoryId,
           title: categories.filter((cat) => cat.catId == selectedCategoryId)[0][
@@ -63,15 +65,16 @@ const AdminUpdateQuiz = () => {
       };
       updateQuiz(dispatch, quiz, token).then((data) => {
         if (data.type === quizzesConstants.UPDATE_QUIZ_SUCCESS){
-          swal("Quiz Updated!", `${quiz.title} succesfully updated`, "success");
+          notify("Quiz Updated!", `${quiz.title} succesfully updated`, "success");
           fetchQuizzes(dispatch, token);
         }
         else {
-          swal("Quiz Not Updated!", `${quiz.title} not updated`, "error");
+          notify("Quiz Not Updated!", `${quiz.title} not updated`, "error");
         }
+        navigate("/adminQuizzes");
       });
     } else {
-      alert("Select valid category!");
+      notify("Data Invalid", "Select valid subject!", "warning");
     }
   };
 
@@ -94,10 +97,10 @@ const AdminUpdateQuiz = () => {
       </div>
       <div className="adminUpdateQuizPage__content">
         <FormContainer>
-          <h2>Update Quiz</h2>
-          <Form onSubmit={submitHandler}>
+          <h2 className='profile-heading text-center'>Update Quiz</h2>
+          <Form onSubmit={submitHandler} className='custom-form'>
             <Form.Group className="my-3" controlId="title">
-              <Form.Label>Title</Form.Label>
+              <Form.Label className='poppins-light'>Title</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter Quiz Title"
@@ -109,7 +112,7 @@ const AdminUpdateQuiz = () => {
             </Form.Group>
 
             <Form.Group className="my-3" controlId="description">
-              <Form.Label>Description</Form.Label>
+              <Form.Label className='poppins-light'>Description</Form.Label>
               <Form.Control
                 style={{ textAlign: "top" }}
                 as="textarea"
@@ -147,24 +150,25 @@ const AdminUpdateQuiz = () => {
               ></Form.Control>
             </Form.Group> */}
 
-            <Form.Check
-            style={{borderColor:"rgb(68 177 49)"}}
-              className="my-3"
-              type="switch"
-              id="publish-switch"
-              label="Publish Quiz"
-              onChange={onClickPublishedHandler}
-              checked={isActive}
-            />
+            {/*<Form.Check*/}
+            {/*style={{borderColor:"rgb(68 177 49)"}}*/}
+            {/*  className="my-3"*/}
+            {/*  type="switch"*/}
+            {/*  id="publish-switch"*/}
+            {/*  label="Publish Quiz"*/}
+            {/*  onChange={onClickPublishedHandler}*/}
+            {/*  checked={isActive}*/}
+            {/*/>*/}
 
             <div className="my-3">
-              <label htmlFor="category-select">Choose a Subject:</label>
+              <label htmlFor="category-select" className='poppins-light' style={{ paddingBottom:"8px" }}>Choose a Subject:</label>
               <Form.Select
-                aria-label="Choose Category"
+                defaultValue={selectedCategoryId}
+                aria-label="Choose Subject"
                 id="category-select"
                 onChange={onSelectCategoryHandler}
               >
-                <option value="n/a">Choose Category</option>
+                <option value="n/a">Choose Subject</option>
                 {categories ? (
                   categories.map((cat, index) => (
                     <option key={index} value={cat.catId}>
@@ -180,11 +184,11 @@ const AdminUpdateQuiz = () => {
               </Form.Select>
             </div>
             <Button
-              className="my-5 adminUpdateQuizPage__content--button"
-              type="submit"
-              variant="primary"
+                className="my-3 adminUpdateQuizPage__content--button"
+                type="submit"
+                variant=""
             >
-              Add
+              Update
             </Button>
           </Form>
         </FormContainer>

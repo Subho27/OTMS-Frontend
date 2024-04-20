@@ -20,19 +20,9 @@ const Sidebar = ({ children }) => {
       // icon: <TbLayoutGrid />,
     },
     {
-      path: "/adminAddCategory",
-      name: "Add Subject",
-      // icon: <TbLayoutGridAdd />,
-    },
-    {
       path: "/adminQuizzes",
       name: "Quizzes",
       // icon: <MdQuiz />,
-    },
-    {
-      path: "/adminAddQuiz",
-      name: "Add Quiz",
-      // icon: <MdQueue />,
     },
     {
       path: "/adminallResult",

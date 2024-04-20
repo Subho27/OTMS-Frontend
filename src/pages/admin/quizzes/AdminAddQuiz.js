@@ -3,19 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import "./AdminAddQuiz.css";
 import { useDispatch, useSelector } from "react-redux";
-import swal from "sweetalert";
 import Sidebar from "../../../components/Sidebar";
 import FormContainer from "../../../components/FormContainer";
 import * as quizzesConstants from "../../../constants/quizzesConstants";
 import { addQuiz } from "../../../actions/quizzesActions";
 import { fetchCategories } from "../../../actions/categoriesActions";
+import {notify} from "../../../components/Notify";
 
 const AdminAddQuiz = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [maxMarks, setMaxMarks] = useState(0);
   const [numberOfQuestions, setNumberOfQuestions] = useState(0);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
   const categoriesReducer = useSelector((state) => state.categoriesReducer);
@@ -51,15 +51,16 @@ const AdminAddQuiz = () => {
           )[0]["description"],
         },
       };
-      addQuiz(dispatch, quiz, token).then((data) => {
+      addQuiz(dispatch, quiz, token).then(async (data) => {
         if (data.type === quizzesConstants.ADD_QUIZ_SUCCESS)
-          swal("Quiz Added!", `${quiz.title} succesfully added`, "success");
+          notify("Quiz Added!", `${quiz.title} succesfully added`, "success");
         else {
-          swal("Quiz Not Added!", `${quiz.title} not added`, "error");
+          notify("Quiz Not Added!", `${quiz.title} not added`, "error");
         }
+        navigate("/adminQuizzes");
       });
     } else {
-      alert("Select valid category!");
+      notify("Data Invalid", "Select valid subject!", "warning");
     }
   };
 
@@ -82,10 +83,10 @@ const AdminAddQuiz = () => {
       </div>
       <div className="adminAddQuizPage__content">
         <FormContainer>
-          <h2>Add Quiz</h2>
-          <Form onSubmit={submitHandler}>
+          <h2 className='profile-heading text-center'>Add Quiz</h2>
+          <Form onSubmit={submitHandler} className='custom-form'>
             <Form.Group className="my-3" controlId="title">
-              <Form.Label>Title</Form.Label>
+              <Form.Label className='poppins-light'>Title</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter Quiz Title"
@@ -97,7 +98,7 @@ const AdminAddQuiz = () => {
             </Form.Group>
 
             <Form.Group className="my-3" controlId="description">
-              <Form.Label>Description</Form.Label>
+              <Form.Label className='poppins-light'>Description</Form.Label>
               <Form.Control
                 style={{ textAlign: "top" }}
                 as="textarea"
@@ -135,23 +136,23 @@ const AdminAddQuiz = () => {
               ></Form.Control>
             </Form.Group> */}
 
-            <Form.Check
-              className="my-3"
-              type="switch"
-              id="publish-switch"
-              label="Publish Quiz"
-              onChange={onClickPublishedHandler}
-              checked={isActive}
-            />
+            {/*<Form.Check*/}
+            {/*  className="my-3"*/}
+            {/*  type="switch"*/}
+            {/*  id="publish-switch"*/}
+            {/*  label="Publish Quiz"*/}
+            {/*  onChange={onClickPublishedHandler}*/}
+            {/*  checked={isActive}*/}
+            {/*/>*/}
 
             <div className="my-3">
-              <label htmlFor="category-select">Choose a Category:</label>
+              <label htmlFor="category-select" className='poppins-light' style={{ paddingBottom:"8px" }}>Choose a Subject:</label>
               <Form.Select
-                aria-label="Choose Category"
+                aria-label="Choose Subject"
                 id="category-select"
                 onChange={onSelectCategoryHandler}
               >
-                <option value="n/a">Choose Category</option>
+                <option value="n/a">Choose Subject</option>
                 {categories ? (
                   categories.map((cat, index) => (
                     <option key={index} value={cat.catId}>
@@ -167,9 +168,9 @@ const AdminAddQuiz = () => {
               </Form.Select>
             </div>
             <Button
-              className="my-5 adminAddQuizPage__content--button"
-              type="submit"
-              variant="primary"
+                className="my-3 adminAddQuizPage__content--button"
+                type="submit"
+                variant=""
             >
               Add
             </Button>

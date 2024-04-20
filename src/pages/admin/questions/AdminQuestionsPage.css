@@ -9,15 +9,24 @@
 }
 
 .adminQuestionsPage__content {
-    width: 70%;
+    margin: 10px;
+    width: 100%;
     height: fit-content;
     padding: 8px;
 }
 
 .adminQuestionsPage__content--button {
-    display: block;
     width: 20%;
     margin: 20px auto;
-    background-color: rgb(68 177 49);
-    color: white;
+    background-color: #37B5B6;
+    color: #FFFFFF;
+    border: none;
+    font-size: 18px;
+    font-family: "Poppins", sans-serif;
+}
+
+.adminQuestionsPage__content--button:hover {
+    border: 2px solid #37B5B6;
+    color: #37B5B6;
+    font-weight: bold;
 }

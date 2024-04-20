@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import swal from "sweetalert";
 import { addQuestion } from "../../../actions/questionsActions";
 import FormContainer from "../../../components/FormContainer";
 import Sidebar from "../../../components/Sidebar";
@@ -8,6 +7,7 @@ import * as questionsConstants from "../../../constants/questionsConstants";
 import "./AdminAddQuestionsPage.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import {notify} from "../../../components/Notify";
 
 const AdminAddQuestionsPage = () => {
   const [content, setContent] = useState("");
@@ -46,13 +46,14 @@ const AdminAddQuestionsPage = () => {
 
       addQuestion(dispatch, question, token).then((data) => {
         if (data.type === questionsConstants.ADD_QUESTION_SUCCESS)
-          swal("Question Added!", `${content} succesfully added`, "success");
+          notify("Question Added!", `${content} succesfully added`, "success");
         else {
-          swal("Question Not Added!", `${content} not added`, "error");
+          notify("Question Not Added!", `${content} not added`, "error");
         }
       });
+      navigate("/adminQuizzes");
     } else {
-      alert("Select valid answer!");
+      notify("Data Invalid", "Select valid answer!", "warning");
     }
   };
 
@@ -63,12 +64,12 @@ const AdminAddQuestionsPage = () => {
       </div>
       <div className="adminAddQuestionPage__content">
         <FormContainer>
-          <h2>Add Question</h2>
-          <Form onSubmit={submitHandler}>
+          <h2 className='profile-heading text-center'>Add Question</h2>
+          <Form onSubmit={submitHandler} className='custom-form'>
             <Form.Group className="my-3" controlId="content">
-              <Form.Label>Question</Form.Label>
+              <Form.Label className='poppins-bold'>Question</Form.Label>
               <Form.Control
-                style={{ textAlign: "top" }}
+                style={{ textAlign: "left" }}
                 as="textarea"
                 rows="3"
                 type="text"
@@ -81,9 +82,9 @@ const AdminAddQuestionsPage = () => {
             </Form.Group>
 
             <Form.Group className="my-3" controlId="option1">
-              <Form.Label>Option 1</Form.Label>
+              <Form.Label className='poppins-light'>Option 1</Form.Label>
               <Form.Control
-                style={{ textAlign: "top" }}
+                style={{ textAlign: "left" }}
                 as="textarea"
                 rows="2"
                 type="text"
@@ -96,7 +97,7 @@ const AdminAddQuestionsPage = () => {
             </Form.Group>
 
             <Form.Group className="my-3" controlId="option2">
-              <Form.Label>Option 2</Form.Label>
+              <Form.Label className='poppins-light'>Option 2</Form.Label>
               <Form.Control
                 style={{ textAlign: "top" }}
                 as="textarea"
@@ -111,7 +112,7 @@ const AdminAddQuestionsPage = () => {
             </Form.Group>
 
             <Form.Group className="my-3" controlId="option3">
-              <Form.Label>Option 3</Form.Label>
+              <Form.Label className='poppins-light'>Option 3</Form.Label>
               <Form.Control
                 style={{ textAlign: "top" }}
                 as="textarea"
@@ -126,7 +127,7 @@ const AdminAddQuestionsPage = () => {
             </Form.Group>
 
             <Form.Group className="my-3" controlId="option4">
-              <Form.Label>Option 4</Form.Label>
+              <Form.Label className='poppins-light'>Option 4</Form.Label>
               <Form.Control
                 style={{ textAlign: "top" }}
                 as="textarea"
@@ -141,7 +142,7 @@ const AdminAddQuestionsPage = () => {
             </Form.Group>
 
             <div className="my-3">
-              <label htmlFor="answer-select">Choose Correct Option:</label>
+              <label htmlFor="answer-select" className='poppins-bold' style={{ paddingBottom:"8px" }}>Choose Correct Option:</label>
               <Form.Select
                 aria-label="Choose Correct Option"
                 id="answer-select"
@@ -169,7 +170,7 @@ const AdminAddQuestionsPage = () => {
             <Button
               className="my-5 adminAddQuestionPage__content--button"
               type="submit"
-              variant="primary"
+              variant=""
             >
               Add
             </Button>

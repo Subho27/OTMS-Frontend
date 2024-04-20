@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import "./AdminUpdateCategoryPage.css";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import swal from "sweetalert";
 import { useParams } from "react-router-dom";
 import * as categoriesConstants from "../../../constants/categoriesConstants";
 import FormContainer from "../../../components/FormContainer";
 import Sidebar from "../../../components/Sidebar";
 import { updateCategory } from "../../../actions/categoriesActions";
 import { useNavigate } from "react-router-dom";
+import {notify} from "../../../components/Notify";
 
 const AdminUpdateCategoryPage = () => {
   const dispatch = useDispatch();
@@ -30,9 +30,9 @@ const AdminUpdateCategoryPage = () => {
     const category = { catId: catId, title: title, description: description };
     updateCategory(dispatch, category, token).then((data) => {
       if (data.type === categoriesConstants.UPDATE_CATEGORY_SUCCESS) {
-        swal("Subject Updated!", `${title} succesfully updated`, "success");
+        notify("Subject Updated!", `${title} succesfully updated`, "success");
       } else {
-        swal("Subject Not Updated!", `${title} not updated`, "error");
+        notify("Subject Not Updated!", `${title} not updated`, "error");
       }
     });
     navigate("/adminCategories");
@@ -45,10 +45,10 @@ const AdminUpdateCategoryPage = () => {
       </div>
       <div className="adminUpdateCategoryPage__content">
         <FormContainer>
-          <h2>Update Subject</h2>
-          <Form onSubmit={submitHandler}>
+          <h2 className='profile-heading text-center'>Update Subject</h2>
+          <Form onSubmit={submitHandler} className='custom-form'>
             <Form.Group className="my-3" controlId="title">
-              <Form.Label>Title</Form.Label>
+              <Form.Label className='poppins-light'>Title</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter Category Title"
@@ -60,7 +60,7 @@ const AdminUpdateCategoryPage = () => {
             </Form.Group>
 
             <Form.Group className="my-3" controlId="description">
-              <Form.Label>Description</Form.Label>
+              <Form.Label className='poppins-light'>Description</Form.Label>
               <Form.Control
                 style={{ textAlign: "top" }}
                 as="textarea"

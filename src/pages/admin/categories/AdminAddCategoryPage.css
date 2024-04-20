@@ -6,11 +6,10 @@
     position: sticky;
     top: 0;
     flex: 0.01;
-
 }
 
 .adminAddCategoryPage__content {
-    margin: 5px;
+    margin: 10px;
     padding: 8px;
     flex: 0.99;
 }
@@ -19,6 +18,21 @@
     display: block;
     width: 20%;
     margin: 20px auto;
-    background-color: rgb(68 177 49);
-    color:white;
+    background-color: #37B5B6;
+    color: #FFFFFF;
+    border: none;
+    font-size: 18px;
+    font-family: "Poppins", sans-serif;
 }
+
+.adminAddCategoryPage__content--button:hover {
+    border: 2px solid #37B5B6;
+    color: #37B5B6;
+    font-weight: bold;
+}
+
+.custom-form {
+    width: 60%;
+    margin: auto;
+}
+

@@ -9,14 +9,16 @@
 }
 
 .adminQuizzesPage__content {
-    width: 70%;
+    margin: 10px;
+    width: 100%;
     height: fit-content;
     padding: 8px;
 }
 
 .adminQuizzesPage__content--quizzesList {
-    width: 100% !important;
-    margin-top: 5px;
+    width: 32%;
+    height: 200px;
+    margin-top: 30px;
     border-bottom-style: inset;
     border-right-style: inset;
     border: 1px solid grey;
@@ -27,12 +29,41 @@
     display: flex;
     flex-wrap: wrap;
     margin: 5px;
+    justify-content: space-evenly;
 }
 
 .adminQuizzesPage__content--button {
+    float: right;
     display: block;
     width: 20%;
     margin: 20px auto;
-    background-color: rgb(68 177 49);
+    background-color: #37B5B6;
+    color: #FFFFFF;
+    border: none;
+    font-size: 18px;
+    font-family: "Poppins", sans-serif;
+}
+
+.adminQuizzesPage__content--button:hover {
+    border: 2px solid #37B5B6;
+    color: #37B5B6;
+    font-weight: bold;
+}
+
+.button-list-button {
+    border: 1px solid grey;
+    width: 100px;
+    height: 35px;
+    padding: 1px;
+    text-align: center;
+    border-radius: 5px;
     color: white;
+    background-color: #37B5B6;
+    margin: 0 4px;
+}
+
+.button-list-button:hover {
+    border: 2px solid #37B5B6;
+    color: #37B5B6;
+    font-weight: bold;
 }

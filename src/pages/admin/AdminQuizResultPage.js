@@ -8,6 +8,7 @@ import * as quizResultConstants from "../../constants/quizResultConstants";
 import Message from "../../components/Message";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
+import './AdminQuizResultPage.css'
 import Sidebar from "../../components/Sidebar";
 
 const AdminQuizResultPage = () => {
@@ -16,6 +17,7 @@ const AdminQuizResultPage = () => {
 
   const quizResultReducer = useSelector((state) => state.quizResultReducer);
   const [quizResults, setQuizResults] = useState(null);
+  const [students, setStudents] = useState(null);
   const token = JSON.parse(localStorage.getItem("jwtToken"));
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user.userId : null;
@@ -33,6 +35,8 @@ const AdminQuizResultPage = () => {
     if (!localStorage.getItem("jwtToken")) navigate("/");
   }, []);
 
+  console.log(quizResults);
+
   return (
     <div className="userQuizResultPage__container">
       <div className="userQuizResultPage__sidebar">
@@ -40,28 +44,33 @@ const AdminQuizResultPage = () => {
       </div>
 
       <div className="userQuizResultPage__content">
+        <div className='text-start profile-heading'>
+          <h2 className='text-center'>All Participants Results</h2>
+        </div>
         {quizResults && quizResults.length !== 0 ? (
-          <Table bordered className="userQuizResultPage__content--table">
+          <Table className="userQuizResultPage__content--table">
             <thead>
               <tr>
-                <th>Quiz Id</th>
-                <th>Quiz Name</th>
-                <th>Subject Name</th>
-                <th>Obtained Marks</th>
-                <th>Total Marks</th>
-                <th>Date</th>
+                <th className='poppins-bold'>Quiz Id</th>
+                <th className='poppins-bold'>Quiz Name</th>
+                <th className='poppins-bold'>Subject Name</th>
+                <th className='poppins-bold'>Participant Name</th>
+                <th className='poppins-bold'>Obtained Marks</th>
+                <th className='poppins-bold'>Total Marks</th>
+                <th className='poppins-bold'>Date</th>
               </tr>
             </thead>
             {quizResults.map((r, index) => {
               return (
                 <tbody key={index}>
                   <tr>
-                    <td>{r.quiz.quizId}</td>
-                    <td>{r.quiz.title}</td>
-                    <td>{r.quiz.category.title}</td>
-                    <td>{r.totalObtainedMarks}</td>
-                    <td>{r.quiz.numOfQuestions * 5}</td>
-                    <td>{r.attemptDatetime}</td>
+                    <td className='poppins-light'>{r.quiz.quizId}</td>
+                    <td className='poppins-light'>{r.quiz.title}</td>
+                    <td className='poppins-light'>{r.quiz.category.title}</td>
+                    <td className='poppins-light'>{r.name}</td>
+                    <td className='poppins-light'>{r.totalObtainedMarks}</td>
+                    <td className='poppins-light'>{r.quiz.numOfQuestions * 5}</td>
+                    <td className='poppins-light'>{r.attemptDatetime}</td>
                   </tr>
                 </tbody>
               );
