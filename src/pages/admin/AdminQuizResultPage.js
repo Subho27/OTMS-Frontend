@@ -35,7 +35,6 @@ const AdminQuizResultPage = () => {
     if (!localStorage.getItem("jwtToken")) navigate("/");
   }, []);
 
-  console.log(quizResults);
 
   return (
     <div className="userQuizResultPage__container">

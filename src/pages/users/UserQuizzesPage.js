@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SidebarUser from "../../components/SidebarUser";
 import "./UserQuizzesPage.css";
 import { fetchQuizzes } from "../../actions/quizzesActions";
-import { Card, Col, Row } from "react-bootstrap";
+import {Button, Card, Col, Row} from "react-bootstrap";
 
 const UserQuizzesPage = () => {
   const navigate = useNavigate();
@@ -35,10 +35,12 @@ const UserQuizzesPage = () => {
       </div>
 
       <div className="userQuizzesPage__content">
+        <h2 className='profile-heading text-center'>Quizzes</h2>
+        <div className="whole-list">
         {quizzes ? (
-          <Row>
+          <Row style={{ width:"100%" }}>
             {quizzes.map((q, index) => {
-              if ((catId && catId == q.category.catId) || catId == null)
+              if (q.numOfQuestions > 0 && ((catId && catId == q.category.catId) || catId == null))
                 return (
                   <Col
                     key={index}
@@ -47,10 +49,9 @@ const UserQuizzesPage = () => {
                     md={6}
                     sm={6}
                     xs={12}
-                    style={{}}
+                    style={{ marginTop:"20px", width:"32%", marginLeft:"15px" }}
                   >
                     <Card
-                      bg="light"
                       text="dark"
                       style={{
                         width: "100%",
@@ -60,17 +61,19 @@ const UserQuizzesPage = () => {
                         marginTop: "5px",
                         minWidth: "0px",
                         wordWrap: "break-word",
+                        boxShadow: "0 0 5px 2px #b0afaf"
                       }}
                       className="mb-2"
                     >
                       <Card.Body>
-                        <Card.Title>{q.title}</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">
+                        <Card.Title className='poppins-bold'>{q.title}</Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted poppins-semibold">
                           {q.category.title}
                         </Card.Subtitle>
-                        <Card.Text>{q.description}</Card.Text>
+                        <Card.Text className='poppins-regular'>{q.description}</Card.Text>
                         <div className="userQuizzesPage__content--ButtonsList">
-                          <div
+                          <Button
+                              variant=""
                             className="userQuizzesPage__content--Button"
                             onClick={() =>
                               navigate(`/quizManual?quizId=${q.quizId}`)
@@ -78,14 +81,16 @@ const UserQuizzesPage = () => {
                             style={{cursor: "pointer"}}
                           >
                             {`Start`}
-                          </div>
+                          </Button>
 
                           <div
                             className="userQuizzesPage__content--Button"
                             onClick={() => console.log("View")}
                             style={{ color: "black", backgroundColor: "white" }}
                           >{`${q.numOfQuestions * 2} Minutes`}</div>
+                        </div>
 
+                        <div className="userQuizzesPage__content--ButtonsList">
                           <div
                             className="userQuizzesPage__content--Button"
                             onClick={() => console.log("View")}
@@ -108,6 +113,7 @@ const UserQuizzesPage = () => {
           <p>No Quizzes Available</p>
         )}
       </div>
+    </div>
     </div>
   );
 };

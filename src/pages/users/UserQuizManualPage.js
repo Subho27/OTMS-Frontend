@@ -47,32 +47,32 @@ const UserQuizManualPage = () => {
       {quiz ? (
         <div className="quizManualPage__content">
           <div className="quizManualPage__content--section">
-            <h5>Read the instruction of this page carefully</h5>
-            <p style={{ color: "grey" }}>One more step to go</p>
+            <h5 className='poppins-medium'>Read the instruction of this page carefully</h5>
+            <p className='poppins-regular' style={{ color: "grey" }}>One more step to go</p>
           </div>
 
           <div className="quizManualPage__content--section">
-            <h3>{quiz.title}</h3>
-            <p>{quiz.description}</p>
+            <h3 className='poppins-bold'>{quiz.title}</h3>
+            <p className='poppins-semibold'>{quiz.description}</p>
           </div>
 
           <hr />
 
           <div>
-            <h3>Important Instructions</h3>
-            <ul>
+            <h3 className='poppins-medium'>Important Instructions</h3>
+            <ul className='poppins-light'>
               <li>This quiz is only for practice purpose.</li>
               <li>
-                You have to submit quiz within <strong>{quiz.numOfQuestions * 2}</strong>.
+                You have to submit quiz within <strong className='poppins-semibold'>{quiz.numOfQuestions * 2}</strong>.
               </li>
               <li>You can attempt the quiz any number of time.</li>
               <li>
-                There are <strong>{quiz.numOfQuestions} questions</strong> in
+                There are <strong className='poppins-semibold'>{quiz.numOfQuestions} questions</strong> in
                 this quiz.
               </li>
               <li>This quiz is only for practice purpose.</li>
               <li>
-                Total Marks for this quiz is <strong>{quiz.numOfQuestions * 5}.</strong>
+                Total Marks for this quiz is <strong className='poppins-semibold'>{quiz.numOfQuestions * 5}.</strong>
               </li>
               <li>All question is of MCQ type.</li>
             </ul>
@@ -81,10 +81,10 @@ const UserQuizManualPage = () => {
           <hr />
 
           <div>
-            <h3>Attempting Quiz</h3>
-            <ul>
+            <h3 className='poppins-medium'>Attempting Quiz</h3>
+            <ul className='poppins-light'>
               <li>
-                Click <strong>Start Quiz</strong> button to start the quiz.
+                Click <strong className='poppins-semibold'>Start Quiz</strong> button to start the quiz.
               </li>
               <li>
                 The timer will start the moment, you will click on the Start
@@ -94,11 +94,8 @@ const UserQuizManualPage = () => {
                 You can not resume this quiz if interrupted due to any reason.
               </li>
               <li>
-                Click on <strong>Submit Quiz</strong> button on completion of
+                Click on <strong className='poppins-semibold'>Submit Quiz</strong> button on completion of
                 the quiz.
-              </li>
-              <li>
-                Result of the test is generated automatically in PDF format.
               </li>
             </ul>
           </div>
@@ -106,11 +103,7 @@ const UserQuizManualPage = () => {
           <Button
             className="quizManualPage__content--button"
             onClick={() => startQuizHandler(quiz.title, quiz.quizId)}
-            style={{
-              border: "1px solid grey",
-              margin: "2px 8px",
-            }}
-            variant="primary"
+            variant=""
           >{`Start Quiz`}</Button>
         </div>
       ) : (

@@ -12,7 +12,7 @@
 .quizManualPage__content {
     width: 80%;
     height: fit-content;
-    margin: 0px auto;
+    margin: 30px;
 }
 
 .quizManualPage__content--section {
@@ -25,8 +25,19 @@ hr{
 }
 
 .quizManualPage__content--button {
-    margin: 30px auto;
-    display: block;
+    border: 1px solid grey;
+    width: 100px;
+    height: 35px;
+    padding: 1px;
+    text-align: center;
+    border-radius: 5px;
     color: white;
-    background-color: rgb(68 177 49);
+    background-color: #37B5B6;
+    margin: 0 4px;
+}
+
+.quizManualPage__content--button:hover {
+    border: 2px solid #37B5B6;
+    color: #37B5B6;
+    font-weight: bold;
 }

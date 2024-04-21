@@ -11,8 +11,10 @@ import * as quizResultConstants from "../../constants/quizResultConstants";
 import { submitQuiz } from "../../actions/quizResultActions";
 import { fetchQuizzes } from "../../actions/quizzesActions";
 import ReactSpinnerTimer from "react-spinner-timer";
+import {confirmation, notify} from "../../components/Notify";
 
 const UserQuestionsPage = () => {
+  const toastId = React.useRef(null);
   Number.prototype.zeroPad = function () {
     return ("0" + this).slice(-2);
   };
@@ -32,7 +34,7 @@ const UserQuestionsPage = () => {
   const token = JSON.parse(localStorage.getItem("jwtToken"));
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user.userId : null;
-  const [timeRemaining, setTimeRemaining] = useState(questions.length * 2 * 60);
+  const [timeRemaining, setTimeRemaining] = useState(questions.length * 2 * 60 === 0 ? 60 : questions.length * 2 * 60);
   console.log("timeRemaining ", timeRemaining);
   let answers = {};
   let intervalId = null;
@@ -40,7 +42,8 @@ const UserQuestionsPage = () => {
   useEffect(() => {
     intervalId = setInterval(() => {
       if (timeRemaining <= 0) {
-        submitQuizHandler(answers, true);
+        console.log("Here", timeRemaining, " Called");
+        submitQuizHandler(true);
       } else {
         setTimeRemaining((prev) => prev - 1);
       }
@@ -50,60 +53,71 @@ const UserQuestionsPage = () => {
       clearInterval(intervalId);
       intervalId = null;
     };
-  }, []);
+  }, [timeRemaining]);
 
   const submitQuizHandler = (isTimesUp = false) => {
     const answers = JSON.parse(localStorage.getItem("answers"));
+    console.log(answers);
     if (isTimesUp) {
       submitQuiz(dispatch, userId, quizId, answers, token).then((data) => {
+
         if (data.type === quizResultConstants.ADD_QUIZ_RESULT_SUCCESS) {
-          swal(
+          notify(
             "Quiz Submitted!",
             `You scored ${data.payload.totalObtainedMarks} marks in ${quizTitle} quiz.`,
             "success"
           );
+          localStorage.removeItem("answers");
           return navigate("/quizResults");
         } else {
-          swal(
+          notify(
             "Quiz not Submitted!",
-            `${quizTitle} is still active. You can modify your answers`,
+            `${quizTitle} is now closed. You can not modify your answers`,
             "info"
           );
+          localStorage.removeItem("answers");
           return navigate("/quizResults");
         }
       });
     } else {
-      swal({
-        title: "Are you sure?",
-        text: "Once submitted, you will not be able to modify your answers!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      }).then((willSubmit) => {
-        if (willSubmit) {
+      confirmation(
+        "Are you sure?",
+        "Once submitted, you will not be able to modify your answers!",
+        "warning",
+        () => {
           submitQuiz(dispatch, userId, quizId, answers, token).then((data) => {
             if (data.type === quizResultConstants.ADD_QUIZ_RESULT_SUCCESS) {
-              swal(
-                "Quiz Submitted!",
-                `You scored ${data.payload.totalObtainedMarks} marks in ${quizTitle} quiz.`,
-                "success"
+              notify(
+                  "Quiz Submitted!",
+                  `You scored ${data.payload.totalObtainedMarks} marks in ${quizTitle} quiz.`,
+                  "success"
               );
+              localStorage.removeItem("answers");
               return navigate("/quizResults");
             } else {
-              swal(
-                "Quiz not Submitted!",
-                `${quizTitle} is still active. You can modify your answers`,
-                "info"
+              notify(
+                  "Quiz not Submitted!",
+                  `${quizTitle} is still active. You can modify your answers`,
+                  "info"
               );
-              return navigate("/quizResults");
+              // return navigate("/quizResults");
             }
           });
-        }
-      });
+        },
+        () => {
+          notify(
+              "Quiz not Submitted!",
+              `${quizTitle} is still active. You can modify your answers`,
+              "info"
+          );
+          // return navigate("/quizResults");
+        },
+        toastId.current
+      )
     }
-    console.log("Clearing Interval");
-    clearInterval(intervalId);
-    intervalId = null;
+    // console.log("Clearing Interval");
+    // clearInterval(intervalId);
+    // intervalId = null;
   };
 
   useEffect(() => {
@@ -133,6 +147,7 @@ const UserQuestionsPage = () => {
         <h2>{`Questions : ${quizTitle}`}</h2>
         <div className="userQuestionsPage__content--options">
           <Button
+            variant=""
             className="userQuestionsPage__content--button"
             onClick={() => submitQuizHandler()}
           >
@@ -140,8 +155,8 @@ const UserQuestionsPage = () => {
           </Button>
           <div className="userQuestionsPage__content--spinner">
             <ReactSpinnerTimer
-              timeInSeconds={questions.length * 1 * 60}
-              totalLaps={questions.length * 1 * 60}
+              timeInSeconds={questions.length * 2 * 60}
+              totalLaps={1}
               onLapInteraction={() => {
                 submitQuizHandler(true);
               }}

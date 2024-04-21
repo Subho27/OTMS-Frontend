@@ -16,21 +16,21 @@ const SidebarUser = ({ children }) => {
     {
       path: "/profile",
       name: "Profile",
-      icon: <FaUserAlt />,
+      // icon: <FaUserAlt />,
     },
     {
       path: "/quizResults",
       name: "Report Card",
-      icon: <TbReport />,
+      // icon: <TbReport />,
     },
     {
       path: "/quizzes",
       name: "All Quizzes",
-      icon: <MdQuiz />,
+      // icon: <MdQuiz />,
     },
   ]);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const SidebarUser = ({ children }) => {
         return {
           path: `/quiz/cat${c.title}?catId=${c.catId}`,
           name: c.title,
-          icon: <TbLayoutGrid />,
+          // icon: <TbLayoutGrid />,
         };
       });
       setMenuItems([...menuItems, ...newMenuItems]);
@@ -60,9 +60,9 @@ const SidebarUser = ({ children }) => {
           {/* <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">
             Logo
           </h1> */}
-          <div style={{ marginLeft: isOpen ? "50px" : "0px" }} className="bars">
-            <FaBars onClick={toggle} />
-          </div>
+          {/*<div style={{ marginLeft: isOpen ? "50px" : "0px" }} className="bars">*/}
+          {/*  <FaBars onClick={toggle} />*/}
+          {/*</div>*/}
         </div>
         {menuItems.map((item, index) => (
           <NavLink

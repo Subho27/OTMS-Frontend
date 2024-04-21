@@ -28,6 +28,7 @@ const UserQuizResultPage = () => {
       });
   }, []);
 
+  console.log(quizResults);
   useEffect(() => {
     if (!localStorage.getItem("jwtToken")) navigate("/");
   }, []);
@@ -39,29 +40,32 @@ const UserQuizResultPage = () => {
       </div>
 
       <div className="userQuizResultPage__content">
+        <div className='text-start profile-heading'>
+          <h2 className='text-center'>Attempted Test Results</h2>
+        </div>
         { 
         quizResults && quizResults.length !== 0 ? (
-          <Table bordered className="userQuizResultPage__content--table">
+          <Table className="userQuizResultPage__content--table">
             <thead>
               <tr>
-                <th>Quiz Id</th>
-                <th>Quiz Name</th>
-                <th>Subject Name</th>
-                <th>Obtained Marks</th>
-                <th>Total Marks</th>
-                <th>Date</th>
+                <th className='poppins-bold'>Quiz Id</th>
+                <th className='poppins-bold'>Quiz Name</th>
+                <th className='poppins-bold'>Subject Name</th>
+                <th className='poppins-bold'>Obtained Marks</th>
+                <th className='poppins-bold'>Total Marks</th>
+                <th className='poppins-bold'>Date</th>
               </tr>
             </thead>
             {quizResults.map((r, index) => {
               return (
                 <tbody key={index}>
                   <tr>
-                    <td>{r.quiz.quizId}</td>
-                    <td>{r.quiz.title}</td>
-                    <td>{r.quiz.category.title}</td>
-                    <td>{r.totalObtainedMarks}</td>
-                    <td>{r.quiz.maxMarks}</td>
-                    <td>{r.attemptDatetime}</td>
+                    <td className='poppins-light'>{r.quiz.quizId}</td>
+                    <td className='poppins-light'>{r.quiz.title}</td>
+                    <td className='poppins-light'>{r.quiz.category.title}</td>
+                    <td className='poppins-light'>{r.totalObtainedMarks}</td>
+                    <td className='poppins-light'>{r.quiz.numOfQuestions*5}</td>
+                    <td className='poppins-light'>{r.attemptDatetime}</td>
                   </tr>
                 </tbody>
               );

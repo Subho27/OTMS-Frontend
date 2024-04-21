@@ -19,16 +19,26 @@
     display: flex;
     text-align: center;
     width: 100%;
+    justify-content: right;
+    column-gap: 30%;
 }
 
 .userQuestionsPage__content--button {
-    display: inline-block;
-    width: 20%;
-    height: 2.5em;
-    margin: 20px auto;
-    background-color: rgb(68 177 49);
+    border: 1px solid grey;
+    width: 300px;
+    height: 35px;
+    padding: 1px;
+    text-align: center;
+    border-radius: 5px;
     color: white;
-    justify-content: flex-start;
+    background-color: #37B5B6;
+    margin: 0 4px;
+}
+
+.userQuestionsPage__content--button:hover {
+    border: 2px solid #37B5B6;
+    color: #37B5B6;
+    font-weight: bold;
 }
 
 .userQuestionsPage__content--spinner{
@@ -38,5 +48,4 @@
     height: 150px;
     display: inline-block;
     width: 20%;
-    justify-content: flex-end;
 }

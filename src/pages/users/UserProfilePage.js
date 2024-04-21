@@ -33,14 +33,16 @@ const UserProfilePage = () => {
       </div>
       {user && (
         <div className="userProfilePage__content">
-          <Image
-            className="userProfilePage__content--profilePic"
-            width="20%"
-            height="20%"
-            roundedCircle
-            src="images/user.png"
-          />
-
+          {/*<Image*/}
+          {/*  className="userProfilePage__content--profilePic"*/}
+          {/*  width="20%"*/}
+          {/*  height="20%"*/}
+          {/*  roundedCircle*/}
+          {/*  src="images/user.png"*/}
+          {/*/>*/}
+          <div className='text-start profile-heading'>
+            <h2 className='text-center'>About <strong>{`${user.firstName}`}</strong></h2>
+          </div>
           <Table bordered className="userProfilePage__content--table">
             <tbody>
               <tr>
@@ -61,7 +63,10 @@ const UserProfilePage = () => {
               </tr>
               <tr>
                 <td>Account Status</td>
-                <td>{`${user.enabled}`}</td>
+                <td>{user.enabled ?
+                  <img src={require('../../images/status-ok.png')} alt='OK' className='status-icon'/> :
+                  <img src={require('../../images/status-not-ok.png')} alt='NOT OK' className='status-icon'/>
+                }</td>
               </tr>
             </tbody>
           </Table>
