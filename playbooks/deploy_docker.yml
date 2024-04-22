@@ -1,0 +1,40 @@
+---
+- name: Deploy Docker container on Ubuntu Server
+  hosts: all
+  gather_facts: false
+  become: yes
+  
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+      tags: 
+        - docker
+
+    - name: Ensure Docker service is started
+      service:
+        name: docker
+        state: started
+      tags: 
+        - docker
+
+    - name: Pull Docker image from Docker Hub
+      docker_image:
+        name: subhodip703/otms-frontend
+        source: pull
+        state: present
+        force_source: yes
+      tags: 
+        - docker
+
+    - name: Run Docker container
+      docker_container:
+        name: otms_frontend_container
+        image: subhodip703/otms-frontend
+        state: started
+        restart_policy: always
+        published_ports:
+          - "8087:80"
+      tags: 
+        - docker
