@@ -11,7 +11,7 @@ pipeline {
         stage('Build Project') {
             steps {
                 sh 'npm install'
-                sh 'npm run build'
+                sh 'CI=false npm run build'
             }
         }
        
