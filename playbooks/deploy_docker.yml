@@ -5,13 +5,6 @@
   become: yes
   
   tasks:
-    - name: Install Docker
-      apt:
-        name: docker.io
-        state: present
-      tags: 
-        - docker
-
     - name: Ensure Docker service is started
       service:
         name: docker
