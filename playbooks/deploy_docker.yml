@@ -9,6 +9,13 @@
     ansible_become_password: "ubuntu12"
   
   tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+      tags: 
+        - docker
+        
     - name: Ensure Docker service is started
       service:
         name: docker
